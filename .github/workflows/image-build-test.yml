@@ -1,0 +1,29 @@
+name: Docker Image CI/CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths-ignore:
+    - "README.md"
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    # if: startsWith(github.ref, 'refs/heads/master') # Running this job only for master
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build and publish Docker Image to GitHub Packages Registry
+      # You may pin to the exact commit or the version.
+      # uses: VaultVulp/gp-docker-action@abd86dfdcd23929f6195a0fd455769a73b7276da
+      uses: VaultVulp/gp-docker-action@1.1.7
+      with:
+        # GitHub token to push Docker image to GitHub Packages
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        # Docker Image name
+        image-name: kubectl-helm-runner
+        image-tag: test
+        # build-context: /docker
+        dockerfile: Dockerfile
