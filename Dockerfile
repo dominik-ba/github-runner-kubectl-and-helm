@@ -6,7 +6,7 @@ RUN true && \
     curl -L "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" -o /tmp/kubectl.sha256 && \
     echo "$(cat /tmp/kubectl.sha256) /tmp/kubectl" | sha256sum --check && \
     chmod +x /tmp/kubectl && \
-    mv /tmp/kubectl /usr/bin/kubectl && \
+    sudo mv /tmp/kubectl /usr/bin/kubectl && \
     kubectl version --client --output=yaml && \
     true
 
@@ -17,8 +17,8 @@ ENV HELM_TAR_FILE="helm-v${HELM_VERSION}-linux-amd64.tar.gz"
 
 RUN true && \
     curl -L ${HELM_BASE_URL}/${HELM_TAR_FILE} | tar xvz -C /tmp/ && \
-    mv /tmp/linux-amd64/helm /usr/bin/helm && \
-    chmod +x /usr/bin/helm && \
-    rm -rf linux-amd64 && \
+    chmod +x /tmp/linux-amd64/helm && \
+    sudo mv /tmp/linux-amd64/helm /usr/bin/helm && \
+    rm -rf /tmp/linux-amd64 && \
     helm version && \
     true
