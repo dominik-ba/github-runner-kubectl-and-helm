@@ -5,7 +5,7 @@ RUN true && \
     curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /tmp/kubectl && \
     curl -L "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" -o /tmp/kubectl.sha256 && \
     echo "$(cat /tmp/kubectl.sha256) /tmp/kubectl" | sha256sum --check && \
-    chmod +x kubectl && \
+    chmod +x /tmp/kubectl && \
     mv ./kubectl /usr/bin/kubectl && \
     kubectl version --client --output=yaml && \
     true
